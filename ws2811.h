@@ -40,17 +40,20 @@ extern "C" {
 
 
 #define WS2811_TARGET_FREQ                       800000   // Can go as low as 400000
+// encoded as WRGB bytes
+#define WS2811_STRIP_RGB                         0x00100800
+#define WS2811_STRIP_RBG                         0x00100008
+#define WS2811_STRIP_GRB                         0x00081000
+#define WS2811_STRIP_GBR                         0x00001008
+#define WS2811_STRIP_BRG                         0x00080010
+#define WS2811_STRIP_BGR                         0x00000810
 
-#define WS2811_STRIP_RGB                         0x100800
-#define WS2811_STRIP_RBG                         0x100008
-#define WS2811_STRIP_GRB                         0x081000
-#define WS2811_STRIP_GBR                         0x001008
-#define WS2811_STRIP_BRG                         0x080010
-#define WS2811_STRIP_BGR                         0x000810
-
+#define WS2811_STRIP_WRGB                         0x18100800 
+   
 struct ws2811_device;
-
-typedef uint32_t ws2811_led_t;                   //< 0x00RRGGBB
+   
+typedef uint32_t ws2811_led_t;                   //< 0xWWRRGGBB
+   
 typedef struct
 {
     int gpionum;                                 //< GPIO Pin with PWM alternate function, 0 if unused

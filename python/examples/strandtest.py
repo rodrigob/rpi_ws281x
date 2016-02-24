@@ -13,7 +13,7 @@ LED_COUNT      = 16      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 25      # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 
 
@@ -85,14 +85,17 @@ if __name__ == '__main__':
 	print 'Press Ctrl-C to quit.'
 	while True:
 		# Color wipe animations.
-		colorWipe(strip, Color(255, 0, 0))  # Red wipe
-		colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-		colorWipe(strip, Color(0, 0, 255))  # Green wipe
-		# Theater chase animations.
-		theaterChase(strip, Color(127, 127, 127))  # White theater chase
-		theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-		theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-		# Rainbow animations.
-		rainbow(strip)
-		rainbowCycle(strip)
-		theaterChaseRainbow(strip)
+		colorWipe(strip, Color(25, 0, 0, 0))  # Red wipe
+		colorWipe(strip, Color(0, 25, 0, 0))  # Blue wiped
+		colorWipe(strip, Color(0, 0, 25, 0))  # Green wipe
+		colorWipe(strip, Color(0, 0, 0, 25))  # White wipe 
+		colorWipe(strip, Color(0, 0, 0, 0))  # Black wipe
+		if False:
+			# Theater chase animations.
+			theaterChase(strip, Color(127, 127, 127))  # White theater chase
+			theaterChase(strip, Color(127,   0,   0))  # Red theater chase
+			theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
+			# Rainbow animations.
+			rainbow(strip)
+			rainbowCycle(strip)
+			theaterChaseRainbow(strip)

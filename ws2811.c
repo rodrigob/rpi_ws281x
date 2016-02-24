@@ -55,7 +55,9 @@
 
 /* 3 colors, 8 bits per byte, 3 symbols per bit + 55uS low for reset signal */
 #define LED_RESET_uS                             55
-#define LED_BIT_COUNT(leds, freq)                ((leds * 3 * 8 * 3) + ((LED_RESET_uS * \
+// NUM_COLOUR_CHANNELS == 3 for RGB, 4 for RGBW
+#define NUM_COLOUR_CHANNELS                      4
+#define LED_BIT_COUNT(leds, freq)                ((leds * NUM_COLOUR_CHANNELS * 8 * 3) + ((LED_RESET_uS * \
                                                   (freq * 3)) / 1000000))
 
 // Pad out to the nearest uint32 + 32-bits for idle low/high times the number of channels
@@ -524,7 +526,7 @@ int ws2811_init(ws2811_t *ws2811)
 
         if (!channel->strip_type)
         {
-          channel->strip_type=WS2811_STRIP_RGB;
+          channel->strip_type=WS2811_STRIP_WRGB;
         }
     }
 
@@ -609,6 +611,7 @@ int ws2811_wait(ws2811_t *ws2811)
     return 0;
 }
 
+
 /**
  * Render the PWM DMA buffer from the user supplied LED arrays and start the DMA
  * controller.  This will update all LEDs on both PWM channels.
@@ -629,10 +632,11 @@ int ws2811_render(ws2811_t *ws2811)
         ws2811_channel_t *channel = &ws2811->channel[chan];
         int wordpos = chan;
         int scale   = (channel->brightness & 0xff) + 1;
+        int wshift  = (channel->strip_type >> 24) & 0xff;
         int rshift  = (channel->strip_type >> 16) & 0xff;
         int gshift  = (channel->strip_type >> 8)  & 0xff;
         int bshift  = (channel->strip_type >> 0)  & 0xff;
-
+       
         for (i = 0; i < channel->count; i++)                // Led
         {
             uint8_t color[] =
@@ -640,6 +644,7 @@ int ws2811_render(ws2811_t *ws2811)
                 (((channel->leds[i] >> gshift) & 0xff) * scale) >> 8, // green
                 (((channel->leds[i] >> rshift) & 0xff) * scale) >> 8, // red
                 (((channel->leds[i] >> bshift) & 0xff) * scale) >> 8, // blue
+	       	(((channel->leds[i] >> wshift) & 0xff) * scale) >> 8, // white
             };
 
             for (j = 0; j < ARRAY_SIZE(color); j++)        // Color
