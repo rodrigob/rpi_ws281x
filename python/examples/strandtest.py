@@ -9,7 +9,7 @@ from neopixel import *
 
 
 # LED strip configuration:
-LED_COUNT      = 16      # Number of LED pixels.
+LED_COUNT      = 60      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
@@ -39,13 +39,13 @@ def theaterChase(strip, color, wait_ms=50, iterations=10):
 def wheel(pos):
 	"""Generate rainbow colors across 0-255 positions."""
 	if pos < 85:
-		return Color(pos * 3, 255 - pos * 3, 0)
+		return Color(pos * 3, 255 - pos * 3, 0, 0)
 	elif pos < 170:
 		pos -= 85
-		return Color(255 - pos * 3, 0, pos * 3)
+		return Color(255 - pos * 3, 0, pos * 3, 0)
 	else:
 		pos -= 170
-		return Color(0, pos * 3, 255 - pos * 3)
+		return Color(0, pos * 3, 255 - pos * 3, 0)
 
 def rainbow(strip, wait_ms=20, iterations=1):
 	"""Draw rainbow that fades across all pixels at once."""
@@ -84,17 +84,19 @@ if __name__ == '__main__':
 
 	print 'Press Ctrl-C to quit.'
 	while True:
-		# Color wipe animations.
-		colorWipe(strip, Color(25, 0, 0, 0))  # Red wipe
-		colorWipe(strip, Color(0, 25, 0, 0))  # Blue wiped
-		colorWipe(strip, Color(0, 0, 25, 0))  # Green wipe
-		colorWipe(strip, Color(0, 0, 0, 25))  # White wipe 
-		colorWipe(strip, Color(0, 0, 0, 0))  # Black wipe
-		if False:
+		
+		if True:
+			# Color wipe animations.
+			colorWipe(strip, Color(25, 0, 0, 0))  # Red wipe
+			colorWipe(strip, Color(0, 25, 0, 0))  # Blue wiped
+			colorWipe(strip, Color(0, 0, 25, 0))  # Green wipe
+			colorWipe(strip, Color(0, 0, 0, 25))  # White wipe 
+			colorWipe(strip, Color(0, 0, 0, 0))  # Black wipe
+		if True:
 			# Theater chase animations.
-			theaterChase(strip, Color(127, 127, 127))  # White theater chase
-			theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-			theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
+			theaterChase(strip, Color(127, 127, 127, 0))  # White theater chase
+			theaterChase(strip, Color(127,   0,   0, 0))  # Red theater chase
+			theaterChase(strip, Color(  0,   0, 127, 0))  # Blue theater chase
 			# Rainbow animations.
 			rainbow(strip)
 			rainbowCycle(strip)
