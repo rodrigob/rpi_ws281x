@@ -115,6 +115,13 @@ class Adafruit_NeoPixel(object):
 		Each color component should be a value from 0 to 255 (where 0 is the
 		lowest intensity and 255 is the highest intensity).
 		"""
+		self.setPixelColor(n, Color(red, green, blue, 0))
+
+	def setPixelColorRGBW(self, n, red, green, blue, white):
+		"""Set LED at position n to the provided red, green, and blue color.
+		Each color component should be a value from 0 to 255 (where 0 is the
+		lowest intensity and 255 is the highest intensity).
+		"""
 		self.setPixelColor(n, Color(red, green, blue, white))
 
 	def setBrightness(self, brightness):
